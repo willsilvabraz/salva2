@@ -49,10 +49,10 @@ public class ListAdapterVendas extends ArrayAdapter<Produto> {
         textoNome.setText(produto.getNome());
 
         TextView textoValorVenda = view.findViewById(R.id.textoValor);
-        textoValorVenda.setText("Salario: " + String.valueOf(produto.getValor()) + " R$");
+        textoValorVenda.setText("Valor: " + String.valueOf(produto.getValor()) + " R$");
 
         TextView textoQuantidade = view.findViewById(R.id.textoquantidade);
-        textoQuantidade.setText("Idade: " + String.valueOf(produto.getQuantidade()));
+        textoQuantidade.setText("Quantidade: " + String.valueOf(produto.getQuantidade()));
 
         Button buttonExcluir = view.findViewById(R.id.button);
         buttonExcluir.setOnClickListener(new View.OnClickListener() {

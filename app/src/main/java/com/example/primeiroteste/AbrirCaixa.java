@@ -34,8 +34,6 @@ public class AbrirCaixa extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     try {
-
-
                         bdCaixa.setValue(Double.parseDouble(valorInicial.getText().toString()));
                         Intent intent = new Intent(AbrirCaixa.this, Venda.class);
                         startActivity(intent);
@@ -48,6 +46,4 @@ public class AbrirCaixa extends AppCompatActivity {
             Log.d("teveoque", "" + e);
         }
     }
-
-
 }

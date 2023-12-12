@@ -6,6 +6,7 @@ import static com.example.primeiroteste.R.layout.item_lista_estoque;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,7 +15,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.primeiroteste.AbrirCaixa;
+import com.example.primeiroteste.MainActivity;
 import com.example.primeiroteste.R;
 import com.example.primeiroteste.pkgEstoque.Produto;
 import com.google.firebase.database.DataSnapshot;
@@ -49,10 +53,12 @@ public class FormCarrinho extends AppCompatActivity {
         efetuarCompra = (Button) findViewById(R.id.comprar);
 
         efetuarCompra.setOnClickListener(new View.OnClickListener() {
-                       Carrinho carrinho = new Carrinho();
+            Carrinho carrinho = new Carrinho();
             @Override
             public void onClick(View v) {
+
                 teste();
+
             }
         });
 
@@ -112,6 +118,14 @@ public class FormCarrinho extends AppCompatActivity {
                     carrinhoRef.setValue(carrinho);
                     preVendaRef.removeValue();
 
+                    if(carrinho.getCarrinho().isEmpty()){
+                        Toast.makeText(FormCarrinho.this, "Escolha pelomenos um item", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Intent intent = new Intent(FormCarrinho.this, Venda.class);
+                        startActivity(intent);
+                        Toast.makeText(FormCarrinho.this, "Venda realizada", Toast.LENGTH_SHORT).show();
+                    }
+
                 }catch (Exception e){
                 }
             }
@@ -122,7 +136,4 @@ public class FormCarrinho extends AppCompatActivity {
             }
         });
     }
-
-
-
 }
