@@ -15,6 +15,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.primeiroteste.AbrirCaixa;
+import com.example.primeiroteste.FecharCaixa;
+import com.example.primeiroteste.MainActivity;
 import com.example.primeiroteste.R;
 import com.example.primeiroteste.pkgEstoque.Produto;
 import com.google.firebase.database.DataSnapshot;
@@ -30,7 +33,6 @@ public class Venda extends AppCompatActivity {
     private ListView lista ;
     private List<Produto> produtoList = new ArrayList<>();
     private ArrayAdapter<Produto> adapterProduto;
-    private EditText inputPesquisa ;
     private TextView valorcarrinho;
     private Carrinho carrinho = new Carrinho();
     private Button verCarrinho, sair;
@@ -39,10 +41,9 @@ public class Venda extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         try {
-            sair = findViewById(R.id.sair);
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_venda);
-            inputPesquisa = findViewById(R.id.vendainputPesquisa);
+            sair = findViewById(R.id.sair);
             lista = findViewById(R.id.outputVendaLista);
             verCarrinho = findViewById(R.id.verCarrinho);
             valorcarrinho = findViewById(R.id.outputValorCarrinho);
@@ -57,7 +58,8 @@ public class Venda extends AppCompatActivity {
             sair.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Intent intent = new Intent(Venda.this, FecharCaixa.class);
+                    startActivity(intent);
                 }
             });
         }catch(Exception e){

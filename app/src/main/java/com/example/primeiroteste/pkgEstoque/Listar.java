@@ -79,6 +79,7 @@ public class Listar extends Fragment {
                     for(DataSnapshot snapshotObj: snapshot.getChildren()){
                         Log.d("Resultado", "resultado" + snapshotObj.getKey());
                         Produto produto = snapshotObj.getValue(Produto.class);
+
                         if(produto.getNome().contains(inputPesquisa.getText().toString()) ||
                                 inputPesquisa.getText().toString().equals("")
                         ){

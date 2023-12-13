@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.primeiroteste.R;
 import com.google.firebase.database.DatabaseReference;
@@ -33,7 +34,14 @@ public class Cadastrar extends Fragment {
             public void onClick(View v) {
                 Log.d("resultado", "bt_cadastrar precionado ");
                 cadastrarProduto();
+                nome.setText("");
+                quantidade.setText("");
+                valor.setText("");
+
+                Toast.makeText(getContext(), "Produto adicionado ao Estoque", Toast.LENGTH_SHORT).show();
+
             }
+
         });
         return view;
     }

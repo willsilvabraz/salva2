@@ -6,11 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Carrinho {
-
-    private List<Produto> carrinho;
     private double ValorCompra;
 
     private String id;
+    private List<Produto> carrinho;
 
     public Carrinho(String id) {
         this.carrinho = this.carrinho = new ArrayList<>();;

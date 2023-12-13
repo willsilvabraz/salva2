@@ -91,11 +91,7 @@ public class FormCarrinho extends AppCompatActivity {
         });
     }
     public void teste (){
-        DatabaseReference carrinhoRef = FirebaseDatabase.getInstance().getReference("venda");
-        DatabaseReference ProdutoRef = FirebaseDatabase.getInstance().getReference("Produtos");
-        DatabaseReference testeRef = FirebaseDatabase.getInstance().getReference("teste");
-
-
+        DatabaseReference vendaRef = FirebaseDatabase.getInstance().getReference("venda");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -115,14 +111,16 @@ public class FormCarrinho extends AppCompatActivity {
                     carrinho.setValorCompra(valorCarrinho);
                     String novoId = preVendaRef.push().getKey();
                     carrinho.setId(novoId);
-                    carrinhoRef.setValue(carrinho);
-                    preVendaRef.removeValue();
 
                     if(carrinho.getCarrinho().isEmpty()){
                         Toast.makeText(FormCarrinho.this, "Escolha pelomenos um item", Toast.LENGTH_SHORT).show();
                     }else{
                         Intent intent = new Intent(FormCarrinho.this, Venda.class);
+                        novoId = preVendaRef.push().getKey();
+                        DatabaseReference carrinhoRef = vendaRef.child(novoId);
                         startActivity(intent);
+                        carrinhoRef.setValue(carrinho);
+                        preVendaRef.removeValue();
                         Toast.makeText(FormCarrinho.this, "Venda realizada", Toast.LENGTH_SHORT).show();
                     }
 

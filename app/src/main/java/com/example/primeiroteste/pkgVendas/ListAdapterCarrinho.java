@@ -15,8 +15,11 @@ import androidx.annotation.Nullable;
 
 import com.example.primeiroteste.R;
 import com.example.primeiroteste.pkgEstoque.Produto;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -63,15 +66,37 @@ public class ListAdapterCarrinho extends ArrayAdapter<Produto> {
 
     private void excluirProduto(Produto produto) {
         try {
-            DatabaseReference produtoRef = FirebaseDatabase.getInstance().getReference("itens").child(produto.getId());
-            produtoRef.removeValue();
+            DatabaseReference preVenda = FirebaseDatabase.getInstance().getReference("pre_venda");
+            DatabaseReference carrinhoReference = preVenda.child("itens");
+            carrinhoReference.orderByChild("nome").equalTo(produto.getNome()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            Produto produtoNoCarrinho = snapshot.getValue(Produto.class);
+                            int novaQuantidade = produtoNoCarrinho.getQuantidade() - 1;
 
-            modeloProduto.remove(produto);
+                            if(novaQuantidade < 1) {
+                                snapshot.getRef().removeValue();
+                                modeloProduto.remove(produto);
+                            }else {
+                                snapshot.getRef().child("quantidade").setValue(novaQuantidade);
+                            }
+                            Toast.makeText(getContext(), "Menos um item no carrinho", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Log.d("Resultado", "Produto adicionado ao carrinho0");
+                        Toast.makeText(getContext(), "Produto adicionado ao carrinho", Toast.LENGTH_SHORT).show();
+                    }
+                }
 
-            notifyDataSetChanged();
-            Toast.makeText(getContext().getApplicationContext(), "Produto excluído", Toast.LENGTH_SHORT).show();
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.d("Resultado", "Erro ao verificar o carrinho: " + databaseError.getMessage());
+                }
+            });
         } catch (Exception e) {
-            Log.d("Resultado", "Erro ao excluir produto: " + e);
+            Log.d("Resultado", "Erro ao Adicionar ao carrinho: " + e.getMessage());
         }
     }
 }

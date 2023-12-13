@@ -110,19 +110,10 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/vendainputPesquisa"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:ems="10"
-                android:hint="Busque aqui"
-                android:inputType="text"
-                android:textSize="24sp" />
-
             <Button
                 android:id="@+id/verCarrinho"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="75dp"
                 android:text="Ver Carrinho" />
         </LinearLayout>
 
